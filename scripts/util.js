@@ -105,3 +105,39 @@ export function sortBy (list ,key) {
         return (a[key] > b[key]) ? 1 : (a[key] < b[key]) ? -1 : 0;
     });
 }
+
+export function drawTabel (id, columns, rows, title) {
+    const tableEl = document.getElementById(id);
+
+    // build table title
+    const tableTitle = `<caption>${title}</caption>`;
+
+    // build table headers
+    const ths = columns
+        .map((column) => `<th>${column}</th>`)
+        .join('\n');
+
+    const tableHeaders = `<tr>${ths}</tr>`;
+
+    // build table rows
+    const tableRows = rows.map((profile) => {
+        const tds = columns
+            .map((column) => {
+                let value = profile[column];
+
+                if (typeof value === 'number') {
+                    value = keep2DecimalDigits(value);
+                }
+
+                // TODO: if value is object or array?
+
+                return `<td>${value}</td>`;
+            })
+            .join('\n');
+
+        return `<tr>${tds}</tr>`;
+    }).join('\n');
+
+    // render table
+    tableEl.innerHTML = tableTitle + '\n' + tableHeaders + '\n' + tableRows;
+}

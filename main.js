@@ -100,6 +100,3 @@ function simulate(profileList) {
 const profileList = getProfileList(numPeople);
 simulate(profileList);
 createReports(profileList);
-
-// test
-// console.log(profileList);

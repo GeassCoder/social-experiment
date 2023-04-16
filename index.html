@@ -32,7 +32,7 @@
 
     <!-- break down by asset group -->
     <section>
-        <div style="display: flex">
+        <div style="display:flex">
             <div style="width:46vw">
                 <canvas id="total-asset-by-asset-group"></canvas>
             </div>
@@ -40,7 +40,7 @@
                 <canvas id="average-asset-by-asset-group"></canvas>
             </div>
         </div>
-        <div style="display: flex">
+        <div style="display:flex">
             <div style="width:46vw">
                 <canvas id="asset-percentage-by-asset-group"></canvas>
             </div>
@@ -49,14 +49,22 @@
             </div>
         </div>
     </section>
-    
-    <div style="width:80%">
-        <canvas id="sorted-asset"></canvas>
-    </div>
 
-    <div style="width:80%">
-        <canvas id="asset-vs-sorted-iq"></canvas>
-    </div>
+    <!-- top iq & asset profiles -->
+    <section style="display:flex">
+        <table id="top-iq-profiles"></table>
+        <table id="top-asset-profiles"></table>
+    </section>
+    
+    <!-- raw asset data -->
+    <section>
+        <div style="width:80%">
+            <canvas id="sorted-asset"></canvas>
+        </div>
+        <div style="width:80%">
+            <canvas id="asset-vs-sorted-iq"></canvas>
+        </div>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script type="module" src="./main.js"></script>
