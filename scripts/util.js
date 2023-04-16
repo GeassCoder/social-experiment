@@ -10,7 +10,7 @@ export function keep2DecimalDigits(n) {
     return parseFloat(n.toFixed(2));
 }
 
-function isInRange(x, range) {
+export function isInRange(x, range) {
     return x >= range[0] && x < range[1];
 }
 

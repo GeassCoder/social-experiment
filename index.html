@@ -7,14 +7,48 @@
     <title>Document</title>
 </head>
 <body>
-    <div style="display:flex">
+    <!-- basic distributions -->
+    <section style="display:flex">
         <div style="width:46vw">
             <canvas id="iq-distribution"></canvas>
         </div>
         <div style="width:46vw">
             <canvas id="asset-distribution"></canvas>
         </div>
-    </div>
+    </section>
+
+    <!-- break down by iq group -->
+    <section style="display:flex">
+        <div style="width:31vw">
+            <canvas id="total-asset-by-iq-group"></canvas>
+        </div>
+        <div style="width:31vw">
+            <canvas id="average-asset-by-iq-group"></canvas>
+        </div>
+        <div style="width:31vw">
+            <canvas id="asset-percentage-by-iq-group"></canvas>
+        </div>
+    </section>
+
+    <!-- break down by asset group -->
+    <section>
+        <div style="display: flex">
+            <div style="width:46vw">
+                <canvas id="total-asset-by-asset-group"></canvas>
+            </div>
+            <div style="width:46vw">
+                <canvas id="average-asset-by-asset-group"></canvas>
+            </div>
+        </div>
+        <div style="display: flex">
+            <div style="width:46vw">
+                <canvas id="asset-percentage-by-asset-group"></canvas>
+            </div>
+            <div style="width:46vw">
+                <canvas id="average-iq-by-asset-group"></canvas>
+            </div>
+        </div>
+    </section>
     
     <div style="width:80%">
         <canvas id="sorted-asset"></canvas>
