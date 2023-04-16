@@ -1,0 +1,14 @@
+{
+  "name": "social-experiment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dev-server": "^0.2.0"
+  }
+}
