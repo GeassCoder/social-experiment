@@ -14,6 +14,8 @@ function isInRange(x, range) {
     return x >= range[0] && x < range[1];
 }
 
+// start from `lower`, build groups by `groupSize`, until `upper` is reached
+// there is an edge case where `upper` is exactly the upper bound of the last group
 function generateGroups(lower, upper, groupSize) {
     const result = [];
 
@@ -32,10 +34,10 @@ function generateGroups(lower, upper, groupSize) {
     return result;
 }
 
-export function getIqGroups(data) {
-    const groupSize = 10;
+export function getIqGroups(iqs) {
     const lowerBound = 65;
     const upperBound = 145;
+    const groupSize = 10;
 
     const firstGroup = {
         count: 0,
@@ -53,7 +55,7 @@ export function getIqGroups(data) {
     const groups = [firstGroup, ...intermediateGroups, lastGroup];
 
     // update group count
-    data.forEach(one => {
+    iqs.forEach(one => {
         const group = groups.find(oneGroup => isInRange(one, oneGroup.range));
 
         if (!group) {
@@ -67,12 +69,21 @@ export function getIqGroups(data) {
     return groups;
 }
 
-export function getAssetGroups(data) {
+export function getAssetGroups(assets) {
     const groupSize = 25;
-    const assets = data.map(one => one.asset);
     const maxAsset = Math.max(...assets);
     const groups = generateGroups(0, maxAsset, groupSize);
-    
+
+    // handle an edge case
+    const lastGroup = groups[groups.length - 1];
+    if (maxAsset == lastGroup[1]) {
+        groups.push({
+            count: 0,
+            range: [maxAsset, maxAsset + groupSize],
+            label: `${maxAsset}-${maxAsset + groupSize}`
+        });
+    }
+
     // update group count
     assets.forEach(one => {
         const group = groups.find(oneGroup => isInRange(one, oneGroup.range));

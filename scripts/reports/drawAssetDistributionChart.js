@@ -1,12 +1,6 @@
-import { getAssetGroups } from '../util.js';
-
-export default function drawAssetDistributionChart (profileList) {
-    const assetGroups = getAssetGroups(profileList);
+export default function drawAssetDistributionChart (assetGroups) {
     const xValues = assetGroups.map(one => one.label);
     const yValues = assetGroups.map(one => one.count);
-
-    // ??
-    console.log(1111, assetGroups[0]);
 
     new Chart(
         document.getElementById('asset-distribution'),

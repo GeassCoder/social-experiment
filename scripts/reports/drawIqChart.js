@@ -1,8 +1,4 @@
-import { getIqGroups } from '../util.js';
-
-export default function drawIqChart (profileList) {
-    const iqs = profileList.map(one => one.iq);
-    const iqGroups = getIqGroups(iqs);
+export default function drawIqChart (iqGroups) {
     const xValues = iqGroups.map(one => one.label);
     const yValues = iqGroups.map(one => one.count);
 
