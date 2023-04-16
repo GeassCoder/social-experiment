@@ -1,6 +1,6 @@
 import getProfileList from './scripts/profiles-generator.js';
 import createReports from './scripts/reports/index.js';
-import { keep2DecimalDigits } from './scripts/util.js';
+import { keep2DecimalDigits, addCloseModalListener } from './scripts/util.js';
 
 // green dots
 const pGreen = 0.8;
@@ -110,10 +110,4 @@ simulate(profileList);
 createReports(profileList);
 
 // add close modal event listener
-const modalEl = document.getElementById('modal');
-const modalCloseBtn = modalEl.querySelector('.close');
-const modalContent = modalEl.querySelector('.modal-content');
-modalCloseBtn?.addEventListener('click', () => {
-    modalEl.style.display = 'none';
-    modalContent.innerHTML = '<canvas></canvas>';
-});
+addCloseModalListener();

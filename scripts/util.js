@@ -148,6 +148,13 @@ export function drawTable (id, columns, rows, title) {
     return tableEl;
 }
 
+function openModal (modalEl) {
+    modalEl.style.display = 'block';
+
+    // prevent background from scrolling
+    document.body.style.overflow = 'hidden';
+}
+
 export function addTableEventListener (tableEl, topProfiles) {
     tableEl.addEventListener('click', (event) => {
         const playTd = event.target.closest('[data-id]');
@@ -199,6 +206,19 @@ export function addTableEventListener (tableEl, topProfiles) {
         );
 
         // open modal
-        modalEl.style.display = 'block';
-    });  
+        openModal(modalEl);
+    });
+}
+
+export function addCloseModalListener() {
+    const modalEl = document.getElementById('modal');
+    const modalCloseBtn = modalEl.querySelector('.close');
+    const modalContent = modalEl.querySelector('.modal-content');
+    modalCloseBtn?.addEventListener('click', () => {
+        modalEl.style.display = 'none';
+        modalContent.innerHTML = '<canvas></canvas>';
+
+        // allow body to scroll again
+        document.body.style.overflow = 'auto';
+    });
 }
