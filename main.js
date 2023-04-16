@@ -9,7 +9,7 @@ const gainFactor = 0.03;
 // red dots
 const pRed = 0.05;
 const lossFactor = 0.5;
-const lossCap = 100;
+const lossCap = 80;
 
 // how many iterations to run lifetime
 const lifetimeTicks = 40 * 2;
