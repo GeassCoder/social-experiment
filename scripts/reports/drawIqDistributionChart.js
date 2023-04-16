@@ -1,4 +1,4 @@
-export default function drawIqChart (iqGroups) {
+export default function drawIqDistributionChart (iqGroups) {
     const xValues = iqGroups.map(one => one.label);
     const yValues = iqGroups.map(one => one.count);
 
@@ -32,12 +32,4 @@ export default function drawIqChart (iqGroups) {
             },
         }
     );
-
-    // test
-    // let total = 0;
-    // for (let i = 0; i < iqGroups.length; i++) {
-    //     total += iqGroups[i].count;
-    // }
-    
-    // console.log(1111, total);
 }

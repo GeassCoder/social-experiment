@@ -1,11 +1,11 @@
 import { keep2DecimalDigits } from '../util.js';
 
-export default function drawAssetChart (sortedProfilesByAsset) {
-    const xValues = sortedProfilesByAsset.map(one => one.id);
-    const yValues = sortedProfilesByAsset.map(one => one.asset);
+export default function drawAssetVsSortedIqChart (sortedProfilesByIq) {
+    const xValues = sortedProfilesByIq.map(one => one.id);
+    const yValues = sortedProfilesByIq.map(one => one.asset);
 
     new Chart(
-        document.getElementById('sorted-asset'),
+        document.getElementById('asset-vs-sorted-iq'),
         {
             options: {
                 plugins: {
@@ -14,13 +14,13 @@ export default function drawAssetChart (sortedProfilesByAsset) {
                     },
                     title: {
                         display: true,
-                        text: 'Sorted Asset'
+                        text: 'Asset VS Sorted IQ'
                     },
                     tooltip: {
                         callbacks: {
                             label: (context) => {
                                 const currentIndex = context.dataIndex;
-                                const currentDataPoint = sortedProfilesByAsset[currentIndex];
+                                const currentDataPoint = sortedProfilesByIq[currentIndex];
 
                                 return `Asset: ${keep2DecimalDigits(currentDataPoint.asset)},  ` + `IQ: ${currentDataPoint.iq}`;
                             }

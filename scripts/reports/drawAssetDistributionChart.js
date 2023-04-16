@@ -13,18 +13,7 @@ export default function drawAssetDistributionChart (assetGroups) {
                     title: {
                         display: true,
                         text: 'Asset Distribution'
-                    },
-                    // ??
-                    // tooltip: {
-                    //     callbacks: {
-                    //         label: (context) => {
-                    //             const currentIndex = context.dataIndex;
-                    //             const currentDataPoint = assetGroups[currentIndex];
-
-                    //             return `Count: ${currentDataPoint.count}` + `Asset: ${keep2DecimalDigits(currentDataPoint.asset)}, ` + `IQ: ${currentDataPoint.iq}`;
-                    //         }
-                    //     }
-                    // }
+                    }
                 }
             },
             data: {

@@ -102,4 +102,4 @@ simulate(profileList);
 createReports(profileList);
 
 // test
-console.log(profileList);
+// console.log(profileList);
