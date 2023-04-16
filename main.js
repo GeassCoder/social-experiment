@@ -73,7 +73,18 @@ function tickOne (profile, tickId) {
             assetSnapshot: keep2DecimalDigits(profile.asset),
             assetDiff: keep2DecimalDigits(gain)
         });
+
+        return;
     }
+
+    // log event
+    // even there is nothing interesting happens, still log it to facilitate drawing charts later 
+    profile.history.push({
+        tickId,
+        event: null,
+        assetSnapshot: keep2DecimalDigits(profile.asset),
+        assetDiff: 0
+    });
 }
 
 // for all profiles
@@ -97,3 +108,12 @@ function simulate(profileList) {
 const profileList = getProfileList(numPeople);
 simulate(profileList);
 createReports(profileList);
+
+// add close modal event listener
+const modalEl = document.getElementById('modal');
+const modalCloseBtn = modalEl.querySelector('.close');
+const modalContent = modalEl.querySelector('.modal-content');
+modalCloseBtn?.addEventListener('click', () => {
+    modalEl.style.display = 'none';
+    modalContent.innerHTML = '<canvas></canvas>';
+});

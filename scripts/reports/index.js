@@ -31,7 +31,7 @@ function createReports(profileList) {
     // total asset, average asset, asset percentage, average iq by asset group
     drawAssetByAssetGroupChart(assetGroups, profileList);
 
-    // TODO: refactor 2 functions above
+    // TODO: refactor to pull out logic for drawing charts
 
     // top 20/50 iq profiles
     drawTopIqProfilesTable(sortedProfilesByIq, 20);
@@ -43,9 +43,8 @@ function createReports(profileList) {
     drawSortedAssetChart(sortedProfilesByAsset);
     drawAssetVsSortedIqChart(sortedProfilesByIq);
 
-    // TODO: add play history feature for the 2 tables above
 
-    // ??
+    // TODO: ??
     // allow to adjust params from UI
     // adjust styles
 }

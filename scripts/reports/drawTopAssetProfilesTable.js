@@ -1,4 +1,4 @@
-import { drawTabel } from '../util.js';
+import { drawTable, addTableEventListener } from '../util.js';
 
 export default function drawTopAssetProfilesTable(sortedProfilesByAsset, n) {
     const topProfiles = sortedProfilesByAsset.toReversed().slice(0, n);
@@ -8,9 +8,10 @@ export default function drawTopAssetProfilesTable(sortedProfilesByAsset, n) {
         'iq',
         'successRate',
         'asset',
-        // TODO:
-        // 'history'
+        'history'
     ];
 
-    drawTabel('top-asset-profiles', columns, topProfiles, `Top ${n} Asset Profiles`);
+    const tableEl = drawTable('top-asset-profiles', columns, topProfiles, `Top ${n} Asset Profiles`);
+
+    addTableEventListener(tableEl, topProfiles);
 }

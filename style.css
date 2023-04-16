@@ -1,4 +1,4 @@
-/* layout */
+/* general layout styles start */
 main {
     width: 90%;
     margin: 0 auto;
@@ -26,8 +26,9 @@ main {
 .column-4 {
     width: 25%;
 }
+/* general layout styles end */
 
-/* table styles */
+/* table styles style */
 .table-container {
     height: 450px;
     overflow: scroll;
@@ -49,11 +50,33 @@ table td {
     border: 1px solid grey;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+tr:hover td {
+    background-color: #fcfcfc;
 }
 
-/* raw data styles */
+tr:nth-child(even) td {
+    background-color: #ececec;
+}
+
+tr:nth-child(even):hover td {
+    background-color: #e1e1e1;
+}
+
+/* play button styles */
+td[data-id] i {
+    font-size: 20px;
+    font-style: normal;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: lightskyblue;
+}
+
+td[data-id] i:hover {
+    color: rgb(32, 177, 234);
+}
+/* table styles style end */
+
+/* raw data styles start */
 .raw-data-container {
     display: flex;
     justify-content: center;
@@ -65,3 +88,43 @@ tr:nth-child(even) {
     background-color: #fcfcfc;
     padding: 0 10px;
 }
+/* raw data styles end */
+
+/* modal styles start */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+/* Modal Content/Box */
+.modal .modal-wrapper {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+  
+/* The Close Button */
+.modal .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.modal .close:hover,
+.modal .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* modal styles end */

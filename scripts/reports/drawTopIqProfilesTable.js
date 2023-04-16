@@ -1,4 +1,4 @@
-import { drawTabel } from '../util.js';
+import { drawTable, addTableEventListener } from '../util.js';
 
 export default function drawTopIqProfilesTable(sortedProfilesByIq, n) {
     const topProfiles = sortedProfilesByIq.toReversed().slice(0, n);
@@ -8,9 +8,10 @@ export default function drawTopIqProfilesTable(sortedProfilesByIq, n) {
         'iq',
         'successRate',
         'asset',
-        // TODO:
-        // 'history'
+        'history'
     ];
 
-    drawTabel('top-iq-profiles', columns, topProfiles, `Top ${n} IQ Profiles`);
+    const tableEl = drawTable('top-iq-profiles', columns, topProfiles, `Top ${n} IQ Profiles`);
+
+    addTableEventListener(tableEl, topProfiles);
 }

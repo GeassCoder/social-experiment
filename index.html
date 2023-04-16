@@ -44,7 +44,7 @@
         <section class="section">
             <h2>Break Down By Asset Group</h2>
             <section>
-                <div class="flex">
+                <div class="flex" style="margin-bottom: 15px;">
                     <div class="column-2">
                         <canvas id="total-asset-by-asset-group"></canvas>
                     </div>
@@ -87,6 +87,16 @@
             </div>
         </section>
     </main>
+
+    <!-- The Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-wrapper">
+            <span class="close">&times;</span>
+            <div class="modal-content">
+                <canvas></canvas>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script type="module" src="./main.js"></script>

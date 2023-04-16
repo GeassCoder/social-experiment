@@ -106,7 +106,7 @@ export function sortBy (list ,key) {
     });
 }
 
-export function drawTabel (id, columns, rows, title) {
+export function drawTable (id, columns, rows, title) {
     const tableEl = document.getElementById(id);
 
     // build table title
@@ -120,16 +120,20 @@ export function drawTabel (id, columns, rows, title) {
     const tableHeaders = `<tr>${ths}</tr>`;
 
     // build table rows
-    const tableRows = rows.map((profile) => {
+    const tableRows = rows.map((row) => {
         const tds = columns
             .map((column) => {
-                let value = profile[column];
+                let value = row[column];
 
                 if (typeof value === 'number') {
                     value = keep2DecimalDigits(value);
                 }
 
-                // TODO: if value is object or array?
+                // if value is an object, just show play icon
+                if (typeof value === 'object') {
+                    value = '<i>&#9658;</i>';
+                    return `<td data-id="${row.id}">${value}</td>`
+                }
 
                 return `<td>${value}</td>`;
             })
@@ -140,4 +144,61 @@ export function drawTabel (id, columns, rows, title) {
 
     // render table
     tableEl.innerHTML = tableTitle + '\n' + tableHeaders + '\n' + tableRows;
+
+    return tableEl;
+}
+
+export function addTableEventListener (tableEl, topProfiles) {
+    tableEl.addEventListener('click', (event) => {
+        const playTd = event.target.closest('[data-id]');
+        const profileIdToPlay = playTd?.dataset.id;
+
+        // if click is not on play button, bail out
+        if (!profileIdToPlay) {
+            return;
+        }
+
+        const profileToPlay = topProfiles.find((profile) => profile.id === profileIdToPlay);
+        const history = profileToPlay?.history;
+
+        if (!history) {
+            console.error('Should not happen.', profileIdToPlay, profileToPlay);
+        }
+
+        // draw chart in modal
+        const modalEl = document.getElementById('modal');
+
+        const xValues = history.map(one => one.tickId);
+        const yValues = history.map(one => keep2DecimalDigits(one.assetSnapshot));
+
+        new Chart(
+            modalEl.querySelector('.modal-content canvas'),
+            {
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: `History for Profile-${profileIdToPlay}`
+                        }
+                    }
+                },
+                data: {
+                    labels: xValues,
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Asset Snapshot',
+                            data: yValues
+                        }
+                    ]
+                },
+            }
+        );
+
+        // open modal
+        modalEl.style.display = 'block';
+    });  
 }
