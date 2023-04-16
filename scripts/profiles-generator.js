@@ -26,7 +26,13 @@ function getProfile(id) {
         iq,
         successRate,
         asset: initAsset,
-        history: [] // for retrospective purpose only
+        // set initial value in history
+        history: [{
+            tickId: 0,
+            event: null,
+            assetSnapshot: 100,
+            assetDiff: 0
+        }]
     };
 }
 
