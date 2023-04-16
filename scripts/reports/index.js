@@ -45,8 +45,6 @@ function createReports(profileList) {
 
     // TODO: add play history feature for the 2 tables above
 
-    // TODO: research better presentation of pie chart
-
     // ??
     // allow to adjust params from UI
     // adjust styles

@@ -26,7 +26,11 @@ export default function drawIqDistributionChart (iqGroups) {
                     },
                     {
                         type: 'line',
-                        data: yValues
+                        data: yValues,
+                        fill: false,
+                        // use interpolation mode
+                        cubicInterpolationMode: 'monotone',
+                        tension: 0.4
                     }
                 ]
             },

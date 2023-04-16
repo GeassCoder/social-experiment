@@ -5,66 +5,88 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- basic distributions -->
-    <section style="display:flex">
-        <div style="width:46vw">
-            <canvas id="iq-distribution"></canvas>
-        </div>
-        <div style="width:46vw">
-            <canvas id="asset-distribution"></canvas>
-        </div>
-    </section>
+    <!-- TODO: user input -->
+    <head></head>
+    <main>
+        <!-- basic distributions -->
+        <section class="section">
+            <h2>Basic Distributions</h2>
+            <section class="flex">
+                <div class="column-2">
+                    <canvas id="iq-distribution"></canvas>
+                </div>
+                <div class="column-2">
+                    <canvas id="asset-distribution"></canvas>
+                </div>
+            </section>
+        </section>
+        
+        <!-- break down by iq group -->
+        <section class="section">
+            <h2>Break Down By IQ Group</h2>
+            <section class="flex">
+                <div class="column-3">
+                    <canvas id="total-asset-by-iq-group"></canvas>
+                </div>
+                <div class="column-3">
+                    <canvas id="average-asset-by-iq-group"></canvas>
+                </div>
+                <div class="column-3">
+                    <canvas id="asset-percentage-by-iq-group"></canvas>
+                </div>
+            </section>
+        </section>
 
-    <!-- break down by iq group -->
-    <section style="display:flex">
-        <div style="width:31vw">
-            <canvas id="total-asset-by-iq-group"></canvas>
-        </div>
-        <div style="width:31vw">
-            <canvas id="average-asset-by-iq-group"></canvas>
-        </div>
-        <div style="width:31vw">
-            <canvas id="asset-percentage-by-iq-group"></canvas>
-        </div>
-    </section>
+        <!-- break down by asset group -->
+        <section class="section">
+            <h2>Break Down By Asset Group</h2>
+            <section>
+                <div class="flex">
+                    <div class="column-2">
+                        <canvas id="total-asset-by-asset-group"></canvas>
+                    </div>
+                    <div class="column-2">
+                        <canvas id="average-asset-by-asset-group"></canvas>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="column-2">
+                        <canvas id="asset-percentage-by-asset-group"></canvas>
+                    </div>
+                    <div class="column-2">
+                        <canvas id="average-iq-by-asset-group"></canvas>
+                    </div>
+                </div>
+            </section>
+        </section>
 
-    <!-- break down by asset group -->
-    <section>
-        <div style="display:flex">
-            <div style="width:46vw">
-                <canvas id="total-asset-by-asset-group"></canvas>
-            </div>
-            <div style="width:46vw">
-                <canvas id="average-asset-by-asset-group"></canvas>
-            </div>
-        </div>
-        <div style="display:flex">
-            <div style="width:46vw">
-                <canvas id="asset-percentage-by-asset-group"></canvas>
-            </div>
-            <div style="width:46vw">
-                <canvas id="average-iq-by-asset-group"></canvas>
-            </div>
-        </div>
-    </section>
+        <!-- top iq & asset profiles -->
+        <section class="section">
+            <h2>Top Profiles</h2>
+            <section class="flex">
+                <div class="table-container column-2" >
+                    <table id="top-iq-profiles"></table>
+                </div>
+                <div class="table-container column-2">
+                    <table id="top-asset-profiles"></table>
+                </div>
+            </section>
+        </section>
 
-    <!-- top iq & asset profiles -->
-    <section style="display:flex">
-        <table id="top-iq-profiles"></table>
-        <table id="top-asset-profiles"></table>
-    </section>
-    
-    <!-- raw asset data -->
-    <section>
-        <div style="width:80%">
-            <canvas id="sorted-asset"></canvas>
-        </div>
-        <div style="width:80%">
-            <canvas id="asset-vs-sorted-iq"></canvas>
-        </div>
-    </section>
+        <!-- raw asset data -->
+        <section>
+            <h2>Raw Asset Data</h2>
+            <div class="raw-data-container">
+                <canvas id="sorted-asset"></canvas>
+            </div>
+            <div class="raw-data-container">
+                <canvas id="asset-vs-sorted-iq"></canvas>
+            </div>
+        </section>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script type="module" src="./main.js"></script>
