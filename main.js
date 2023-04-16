@@ -11,9 +11,6 @@ const pRed = 0.05;
 const lossFactor = 0.5;
 const lossCap = 100;
 
-// TODO:
-// systemic events
-
 // how many iterations to run lifetime
 const lifetimeTicks = 40 * 2;
 
