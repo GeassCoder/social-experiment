@@ -155,6 +155,167 @@ function openModal (modalEl) {
     document.body.style.overflow = 'hidden';
 }
 
+// set up animation for progressive with linear easing effect
+// https://www.chartjs.org/docs/latest/samples/animations/progressive-line.html
+function getProgressiveEffect(length) {
+    const totalDuration = 5000;
+    const delayBetweenPoints = totalDuration / length;
+    const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+    const animation = {
+        x: {
+            type: 'number',
+            easing: 'linear',
+            duration: delayBetweenPoints,
+            from: NaN, // the point is initially skipped
+            delay(ctx) {
+            if (ctx.type !== 'data' || ctx.xStarted) {
+                return 0;
+            }
+            ctx.xStarted = true;
+            return ctx.index * delayBetweenPoints;
+            }
+        },
+        y: {
+            type: 'number',
+            easing: 'linear',
+            duration: delayBetweenPoints,
+            from: previousY,
+            delay(ctx) {
+            if (ctx.type !== 'data' || ctx.yStarted) {
+                return 0;
+            }
+            ctx.yStarted = true;
+            return ctx.index * delayBetweenPoints;
+            }
+        }
+    };
+
+    return animation;
+}
+
+// https://www.chartjs.org/docs/latest/samples/utils.html#functions
+const CHART_COLORS = {
+    green: 'rgb(75, 192, 192)',
+    red: 'rgb(255, 99, 132)',
+    blue: 'rgb(54, 162, 235)'
+};
+
+function drawHistoryChart (modalEl, profile, profileIdToPlay) {
+    const history = profile.history;
+    const xValues = history.map(one => one.tickId);
+    const yValues = history.map(one => keep2DecimalDigits(one.assetSnapshot));
+
+    const animation = getProgressiveEffect(yValues.length);
+
+    new Chart(
+        modalEl.querySelector('.modal-content canvas'),
+        {
+            options: {
+                animation,
+                interaction: {
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: `History for Profile-${profileIdToPlay}`
+                    },
+                    subtitle: {
+                        display: true,
+                        text: `IQ: ${profile.iq}, Success Rate: ${keep2DecimalDigits(profile.successRate)}`,
+                        padding: {
+                            bottom: 10
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const currentIndex = context.dataIndex;
+                                const currentDataPoint = history[currentIndex];
+
+                                return `Asset: ${keep2DecimalDigits(currentDataPoint.assetSnapshot)},  ` + `Change: ${currentDataPoint.assetDiff}`;
+                            },
+                            labelColor: (context) => {
+                                const currentIndex = context.dataIndex;
+                                const currentDataPoint = history[currentIndex];
+                                
+                                let backgroundColor = CHART_COLORS.blue;
+                                if (currentDataPoint.assetDiff > 0) {
+                                    backgroundColor = CHART_COLORS.green;
+                                } else if (currentDataPoint.assetDiff < 0) {
+                                    backgroundColor = CHART_COLORS.red;
+                                }
+
+                                return {
+                                    backgroundColor
+                                };
+                            },
+                        }
+                    }
+                }
+            },
+            data: {
+                labels: xValues,
+                datasets: [
+                    {
+                        type: 'line',
+                        data: yValues,
+                        // borderColor: CHART_COLORS.red,
+                        backgroundColor: (context) => {
+                            if (context.type === 'dataset') {
+                                return;
+                            }
+
+                            const currentIndex = context.dataIndex;
+                            const currentDataPoint = history[currentIndex];
+
+                            if (!currentDataPoint) {
+                                console.error('Should not happen');
+                            }
+
+                            if (currentDataPoint.event === 'green') {
+                                return CHART_COLORS.green;
+                            }
+                            
+                            if (currentDataPoint.event === 'red') {
+                                return CHART_COLORS.red;
+                            }
+
+                            return CHART_COLORS.blue;
+                        },
+                        pointStyle: 'circle',
+                        pointRadius: (context) => {
+                            if (context.type === 'dataset') {
+                                return;
+                            }
+
+                            const currentIndex = context.dataIndex;
+                            const currentDataPoint = history[currentIndex];
+
+                            if (!currentDataPoint) {
+                                console.error('Should not happen');
+                            }
+
+                            if (currentDataPoint.event === 'green') {
+                                return 5;
+                            }
+
+                            if (currentDataPoint.event === 'red') {
+                                return 10;
+                            }
+
+                            return 2;
+                        },
+                    }
+                ]
+            },
+        }
+    );
+}
+
 export function addTableEventListener (tableEl, topProfiles) {
     tableEl.addEventListener('click', (event) => {
         const playTd = event.target.closest('[data-id]');
@@ -166,44 +327,14 @@ export function addTableEventListener (tableEl, topProfiles) {
         }
 
         const profileToPlay = topProfiles.find((profile) => profile.id === profileIdToPlay);
-        const history = profileToPlay?.history;
 
-        if (!history) {
+        if (!profileToPlay?.history) {
             console.error('Should not happen.', profileIdToPlay, profileToPlay);
         }
 
         // draw chart in modal
         const modalEl = document.getElementById('modal');
-
-        const xValues = history.map(one => one.tickId);
-        const yValues = history.map(one => keep2DecimalDigits(one.assetSnapshot));
-
-        new Chart(
-            modalEl.querySelector('.modal-content canvas'),
-            {
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: `History for Profile-${profileIdToPlay}`
-                        }
-                    }
-                },
-                data: {
-                    labels: xValues,
-                    datasets: [
-                        {
-                            type: 'line',
-                            label: 'Asset Snapshot',
-                            data: yValues
-                        }
-                    ]
-                },
-            }
-        );
+        drawHistoryChart(modalEl, profileToPlay, profileIdToPlay);
 
         // open modal
         openModal(modalEl);
