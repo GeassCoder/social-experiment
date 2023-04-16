@@ -98,3 +98,10 @@ export function getAssetGroups(assets) {
 
     return groups;
 }
+
+// only make a shallow copy
+export function sortBy (list ,key) {
+    return list.slice().sort((a, b) => {
+        return (a[key] > b[key]) ? 1 : (a[key] < b[key]) ? -1 : 0;
+    });
+}

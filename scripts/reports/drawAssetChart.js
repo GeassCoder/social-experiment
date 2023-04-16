@@ -1,18 +1,8 @@
 import { keep2DecimalDigits } from '../util.js';
 
-export default function drawAssetChart (profileList) {
-    const sortedAssetsData = profileList
-        .map(one => ({
-            id: one.id,
-            iq: one.iq,
-            asset: one.asset
-        }))
-        .sort((a, b) => {
-            return (a.asset > b.asset) ? 1 : (a.asset < b.asset) ? -1 : 0;
-        });
-    
-    const xValues = sortedAssetsData.map(one => one.id);
-    const yValues = sortedAssetsData.map(one => one.asset);
+export default function drawAssetChart (sortedProfilesByAsset) {
+    const xValues = sortedProfilesByAsset.map(one => one.id);
+    const yValues = sortedProfilesByAsset.map(one => one.asset);
 
     new Chart(
         document.getElementById('sorted-asset'),
@@ -30,7 +20,7 @@ export default function drawAssetChart (profileList) {
                         callbacks: {
                             label: (context) => {
                                 const currentIndex = context.dataIndex;
-                                const currentDataPoint = sortedAssetsData[currentIndex];
+                                const currentDataPoint = sortedProfilesByAsset[currentIndex];
 
                                 return `Asset: ${keep2DecimalDigits(currentDataPoint.asset)},  ` + `IQ: ${currentDataPoint.iq}`;
                             }

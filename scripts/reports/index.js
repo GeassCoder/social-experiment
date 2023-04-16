@@ -1,7 +1,7 @@
 import drawIqChart from './drawIqChart.js';
 import drawAssetChart from './drawAssetChart.js'
 import drawAssetDistributionChart from './drawAssetDistributionChart.js'
-import { getIqGroups, getAssetGroups } from '../util.js';
+import { getIqGroups, getAssetGroups, sortBy } from '../util.js';
 
 function createReports(profileList) {
     const iqs = profileList.map(one => one.iq);
@@ -10,9 +10,14 @@ function createReports(profileList) {
     const assets = profileList.map(one => one.asset);
     const assetGroups = getAssetGroups(assets);
 
+    const sortedProfilesByIq = sortBy(profileList, 'iq');
+    const sortedProfilesByAsset = sortBy(profileList, 'asset');
+
     drawIqChart(iqGroups);
     drawAssetDistributionChart(assetGroups);
-    drawAssetChart(profileList);
+
+    drawAssetChart(sortedProfilesByAsset);
+    
 
     // TODO:
     // top 20 iq profiles
