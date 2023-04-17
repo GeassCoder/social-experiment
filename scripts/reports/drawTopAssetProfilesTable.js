@@ -1,7 +1,7 @@
 import { drawTable, addTableEventListener } from '../util.js';
 
 export default function drawTopAssetProfilesTable(sortedProfilesByAsset, n) {
-    const topProfiles = sortedProfilesByAsset.toReversed().slice(0, n);
+    const topProfiles = sortedProfilesByAsset.slice(n).reverse();
 
     const columns = [
         'id',

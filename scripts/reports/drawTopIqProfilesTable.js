@@ -1,7 +1,7 @@
 import { drawTable, addTableEventListener } from '../util.js';
 
 export default function drawTopIqProfilesTable(sortedProfilesByIq, n) {
-    const topProfiles = sortedProfilesByIq.toReversed().slice(0, n);
+    const topProfiles = sortedProfilesByIq.slice(n).reverse();
 
     const columns = [
         'id',
