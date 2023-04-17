@@ -8,8 +8,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Params -->
-    <header>
+    <header class="header">
+        <h1>A Social Experiment</h1>
+        <ul>
+            <li>1000 people in total, everyone's initial asset is 100.</li>
+            <li>Every person has a career of 40 years, simulation ticks every half year, so 80 ticks in total.</li>
+            <li>In each tick, there is a probability that a person hits a <em>green event</em>, and a probablity of hitting a <em>red event</em>.</li>
+            <li>When hit by a green event, a person has a chance to increase his asset by <em>Gain Factor</em>.</li>
+            <ul>
+                <li>The success rate of seizing the chance depends on the person's IQ.</li>
+                <li>Every person's IQ will be randomly generated according to normal distribution.</li>
+            </ul>
+            <li>When hit by a red event, a person's asset will be reduced by <em>Loss Factor</em>.</li>
+            <ul>
+                <li>When <em>Use Loss Cap</em> is checked, a person's asset loss will be capped by the input value. This corresponds to the fact that there are various types of insurances in the real world.</li>
+            </ul>
+        </ul>
+    </header>
+    <section class="params">
+        <!-- Params -->
         <h2>Parameters</h2>
         <form>
             <label>
@@ -40,7 +57,7 @@
         </form>
 
         <button id="simulate-btn">Simulate</button>
-    </header>
+    </section>
     <main>
         <!-- basic distributions -->
         <section class="section">

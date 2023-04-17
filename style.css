@@ -1,5 +1,15 @@
 /* general layout styles start */
-header {
+.header {
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.header li {
+    margin-bottom: 4px;
+}
+
+.params {
     position: sticky;
     top: 0;
     border: 1px solid rgb(229, 229, 229);
