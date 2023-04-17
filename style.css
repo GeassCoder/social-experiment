@@ -33,8 +33,9 @@ form label span {
     margin-bottom: 5px;
 }
 
-form input {
+form input[type="number"] {
     padding: 5px 8px;
+    width: 165px;
 }
 
 form input.invalid {
