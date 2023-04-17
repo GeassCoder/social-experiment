@@ -10,7 +10,7 @@ let gainFactor = 0.03;
 // red dots
 let pRed = 0.05;
 let lossFactor = 0.5;
-let lossCap = 80;
+let lossCap = 50;
 let useLossCap = true;
 
 function init() {
