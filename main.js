@@ -1,113 +1,112 @@
-import getProfileList from './scripts/profiles-generator.js';
-import createReports from './scripts/reports/index.js';
-import { keep2DecimalDigits, addCloseModalListener } from './scripts/util.js';
+import { addCloseModalListener } from './scripts/util.js';
+import runSimulate from './simulate.js';
+import { keep2DecimalDigits, validateField } from './scripts/util.js';
 
+// initial values
 // green dots
-const pGreen = 0.8;
-const gainFactor = 0.03;
+let pGreen = 0.8;
+let gainFactor = 0.03;
 
 // red dots
-const pRed = 0.05;
-const lossFactor = 0.5;
-const lossCap = 80;
+let pRed = 0.05;
+let lossFactor = 0.5;
+let lossCap = 80;
+let useLossCap = true;
 
-// how many iterations to run lifetime
-const lifetimeTicks = 40 * 2;
+function init() {
+    // get controls
+    const pGreenInput = document.getElementById('pGreen-input');
+    const gainFactorInput = document.getElementById('gain-factor-input');
+    const pRedInput = document.getElementById('pRed-input');
+    const lossFactorInput = document.getElementById('loss-factor-input');
+    const lossCapInput = document.getElementById('loss-cap-input');
+    const useLossCapCheckbox = document.getElementById('use-loss-cap-checkbox');
 
-// how many people in total
-const numPeople = 1000;
+    // set initial values to controls
+    pGreenInput.value = pGreen;
+    gainFactorInput.value = gainFactor;
+    pRedInput.value = pRed;
+    lossFactorInput.value = lossFactor;
+    lossCapInput.value = lossCap;
+    useLossCapCheckbox.checked = useLossCap;
+    lossCapInput.disabled = !useLossCap;
 
-// return true with probability of p
-// simulate a random event with probability p
-function randomEvent(p) {
-    return Math.random() < p;
-}
-
-// for one profile
-function tickOne (profile, tickId) {
-    // if hit red
-    if (randomEvent(pRed)) {
-        let loss = profile.asset * lossFactor;
-
-        // if need to cap AND it's past the cap, then cap it
-        if (lossCap && (loss > lossCap)) {
-            loss = lossCap;
-        }
-
-        // if asset is not enough to cover loss, just lose everything, no negative
-        if (loss > profile.asset) {
-            loss = profile.asset;
-        }
-
-        // deduct loss
-        profile.asset -= loss;
-
-        // log event
-        profile.history.push({
-            tickId,
-            event: 'red',
-            assetSnapshot: keep2DecimalDigits(profile.asset),
-            assetDiff: -keep2DecimalDigits(loss)
-        });
-
-        // if already hit red, assume he cannot hit green
-        return;
-    }
-
-    // if hit green
-    if (randomEvent(pGreen)) {
-        const isSuccess = randomEvent(profile.successRate);
-        let gain = 0;
-
-        // if seized opportunity successfully, then asset goes up
-        if (isSuccess) {
-            gain = profile.asset * gainFactor;
-            profile.asset += gain;
-        }
-
-        // log event
-        profile.history.push({
-            tickId,
-            event: 'green',
-            isSuccess,
-            assetSnapshot: keep2DecimalDigits(profile.asset),
-            assetDiff: keep2DecimalDigits(gain)
-        });
-
-        return;
-    }
-
-    // log event
-    // even there is nothing interesting happens, still log it to facilitate drawing charts later 
-    profile.history.push({
-        tickId,
-        event: null,
-        assetSnapshot: keep2DecimalDigits(profile.asset),
-        assetDiff: 0
+    // listen to value changes from controls
+    pGreenInput.addEventListener('change', (event) => {
+        pGreen = keep2DecimalDigits(event.target.value);
+        // in case it's truncated
+        event.target.value = pGreen;
     });
-}
 
-// for all profiles
-function tick (profileList, tickId) {
-    profileList.forEach((profile) => {
-        // if asset is already 0, bail out for bankrupt
-        if (!profile.asset) {
+    gainFactorInput.addEventListener('change', (event) => {
+        gainFactor = keep2DecimalDigits(event.target.value);
+        // in case it's truncated
+        event.target.value = gainFactor;
+    });
+
+    pRedInput.addEventListener('change', (event) => {
+        pRed = keep2DecimalDigits(event.target.value);
+        // in case it's truncated
+        event.target.value = pRed;
+    });
+
+    lossFactorInput.addEventListener('change', (event) => {
+        lossFactor = keep2DecimalDigits(event.target.value);
+        // in case it's truncated
+        event.target.value = lossFactor;
+    });
+
+    lossCapInput.addEventListener('change', (event) => {
+        lossCap = parseInt(event.target.value, 10);
+    });
+
+    useLossCapCheckbox.addEventListener('change', (event) => {
+        // update flag
+        useLossCap = event.target.checked;
+
+        // toggle loss cap input
+        lossCapInput.disabled = !useLossCap;
+    });
+
+    const simulateBtn = document.getElementById('simulate-btn');
+    simulateBtn.addEventListener('click', (event) => {
+        // form validation
+        const range = [0, 1];
+
+        const validations = [
+            validateField(pGreen, range, pGreenInput),
+            validateField(gainFactor, range, gainFactorInput),
+            validateField(pRed, range, pRedInput),
+            validateField(lossFactor, range, lossFactorInput)
+        ];
+
+        if (useLossCap) {
+            validations.push(
+                validateField(lossCap, [0, Infinity], lossCapInput)
+            );
+        }
+
+        // if some validations failed
+        if (validations.some(result => result === false)) {
             return;
         }
 
-        tickOne(profile, tickId);
-    });
+        // run simulation
+        runSimulate({
+            pGreen,
+            gainFactor,
+            pRed,
+            lossFactor,
+            lossCap,
+            useLossCap
+        });
+
+        // show results
+        document.querySelector('main').style.display = 'block';
+    })
+
+    // add close modal event listener
+    addCloseModalListener();
 }
 
-function simulate(profileList) {
-    for (let i = 0; i < lifetimeTicks; ++i) {
-        tick(profileList, i + 1);
-    }
-}
-
-const profileList = getProfileList(numPeople);
-simulate(profileList);
-createReports(profileList);
-
-// add close modal event listener
-addCloseModalListener();
+init();

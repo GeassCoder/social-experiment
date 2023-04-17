@@ -31,22 +31,15 @@ function createReports(profileList) {
     // total asset, average asset, asset percentage, average iq by asset group
     drawAssetByAssetGroupChart(assetGroups, profileList);
 
-    // TODO: refactor to pull out logic for drawing charts
+    // top 50 iq profiles
+    drawTopIqProfilesTable(sortedProfilesByIq, 50);
 
-    // top 20/50 iq profiles
-    drawTopIqProfilesTable(sortedProfilesByIq, 20);
-
-    // top 20/50 asset profiles
-    drawTopAssetProfilesTable(sortedProfilesByAsset, 20);
+    // top 50 asset profiles
+    drawTopAssetProfilesTable(sortedProfilesByAsset, 50);
 
     // raw asset data
     drawSortedAssetChart(sortedProfilesByAsset);
     drawAssetVsSortedIqChart(sortedProfilesByIq);
-
-
-    // TODO: ??
-    // allow to adjust params from UI
-    // adjust styles
 }
 
 export default createReports;

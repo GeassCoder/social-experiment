@@ -7,10 +7,14 @@ export function gaussianRandom(mean, stdev) {
 }
 
 export function keep2DecimalDigits(n) {
-    return parseFloat(n.toFixed(2));
+    return parseFloat(parseFloat(n).toFixed(2));
 }
 
-export function isInRange(x, range) {
+export function isInRange(x, range, exclusiveBothEnds = false) {
+    if (exclusiveBothEnds) {
+        return x > range[0] && x < range[1];
+    }
+
     return x >= range[0] && x < range[1];
 }
 
@@ -316,8 +320,11 @@ function drawHistoryChart (modalEl, profile, profileIdToPlay) {
     );
 }
 
+const tableListners = [];
+
 export function addTableEventListener (tableEl, topProfiles) {
-    tableEl.addEventListener('click', (event) => {
+    // define listener
+    const tableListener = (event) => {
         const playTd = event.target.closest('[data-id]');
         const profileIdToPlay = playTd?.dataset.id;
 
@@ -338,6 +345,15 @@ export function addTableEventListener (tableEl, topProfiles) {
 
         // open modal
         openModal(modalEl);
+    };
+
+    // add listener
+    tableEl.addEventListener('click', tableListener);
+    
+    // have to keep track of all the added listeners so that we can clean up later
+    tableListners.push({
+        tableEl,
+        tableListener
     });
 }
 
@@ -347,9 +363,41 @@ export function addCloseModalListener() {
     const modalContent = modalEl.querySelector('.modal-content');
     modalCloseBtn?.addEventListener('click', () => {
         modalEl.style.display = 'none';
-        modalContent.innerHTML = '<canvas></canvas>';
+
+        const chart = Chart.getChart(modalContent.querySelector('canvas'));
+        chart.destroy();
 
         // allow body to scroll again
         document.body.style.overflow = 'auto';
     });
+}
+
+export function validateField (value, range, control) {
+    const isValid = (isInRange(value, range, true));
+
+    if (isValid) {
+        control.classList.remove('invalid');
+    } else {
+        control.classList.add('invalid');
+    }
+
+    return isValid;
+}
+
+function cleanupCharts() {
+    document.querySelectorAll('canvas').forEach((canvas) => {
+        const chart = Chart.getChart(canvas);
+        chart?.destroy();
+    })
+}
+
+function cleanupTableListeners() {
+    tableListners.forEach(({tableEl, tableListener}) => {
+        tableEl.removeEventListener('click', tableListener);
+    });
+}
+
+export function cleanup () {
+    cleanupCharts();
+    cleanupTableListeners();
 }

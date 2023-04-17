@@ -8,8 +8,39 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- TODO: user input -->
-    <head></head>
+    <!-- Params -->
+    <header>
+        <h2>Parameters</h2>
+        <form>
+            <label>
+                <span>Probability of Green (0 - 1): </span>
+                <input id="pGreen-input" type="number" required />
+            </label>
+            <label>
+                <span>Gain Factor (0 - 1): </span>
+                <input id="gain-factor-input" type="number" required />
+            </label>
+            <label>
+                <span>Probablity of Red (0 - 1): </span>
+                <input id="pRed-input" type="number" required />
+            </label>
+            <label>
+                <span>Loss Factor (0 - 1): </span>
+                <input id="loss-factor-input" type="number" required />
+            </label>
+            <br/>
+            <label>
+                <span>Use Loss Cap </span>
+                <input id="use-loss-cap-checkbox" type="checkbox" required>
+            </label>
+            <label>
+                <span>Loss Cap (optional): </span>
+                <input id="loss-cap-input" type="number" />
+            </label>
+        </form>
+
+        <button id="simulate-btn">Simulate</button>
+    </header>
     <main>
         <!-- basic distributions -->
         <section class="section">
@@ -68,11 +99,9 @@
             <h2>Top Profiles</h2>
             <section class="flex">
                 <div class="table-container column-2" >
-                    <!-- TODO allow select number -->
                     <table id="top-iq-profiles"></table>
                 </div>
                 <div class="table-container column-2">
-                    <!-- TODO allow select number -->
                     <table id="top-asset-profiles"></table>
                 </div>
             </section>

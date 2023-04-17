@@ -1,7 +1,45 @@
 /* general layout styles start */
+header {
+    position: sticky;
+    top: 0;
+    border: 1px solid rgb(229, 229, 229);
+    width: 90%;
+    margin: 0 auto;
+    padding: 0 20px 20px;
+
+    background-color: white;
+    opacity: 0.95;
+    box-shadow: 0 2px 2px rgb(229, 229, 229);
+}
+
+form label {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 20px;
+}
+
+form label span {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input {
+    padding: 5px 8px;
+}
+
+form input.invalid {
+    border: 2px solid #ee2a2a;
+}
+
+#simulate-btn {
+    margin: 10px;
+    padding: 4px 10px;
+}
+
 main {
     width: 90%;
     margin: 0 auto;
+    display: none; /* hide on init */
 }
 
 .section {
