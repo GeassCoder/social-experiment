@@ -8,9 +8,6 @@ const LIFETIME_TICKS = 40 * 2;
 // how many people in total
 const NUM_PEOPLE = 1000;
 
-// TODO:
-const lossFloor = 1;
-
 // return true with probability of p
 // simulate a random event with probability p
 function randomEvent(p) {
@@ -25,6 +22,7 @@ function tickOne (userInputs, profile, tickId) {
         gainFactor,
         pRed,
         lossFactor,
+        lossFloor,
         lossCap,
         useLossCap
     } = userInputs;
