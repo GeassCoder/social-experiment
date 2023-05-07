@@ -114,7 +114,7 @@ export function getAssetGroups(assets, useHeuristicGrouping) {
 
     // only 3 heuristic groups
     if (useHeuristicGrouping) {
-        const sortedAssets = assets.sort();
+        const sortedAssets = assets.sort((a, b) => a - b);
         
         const lowThreahold = sortedAssets[200];
         const highThreshold = sortedAssets[800];
