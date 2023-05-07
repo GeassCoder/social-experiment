@@ -103,8 +103,7 @@ function init() {
         useHeuristicGrouping = event.target.checked;
     });
 
-    const simulateBtn = document.getElementById('simulate-btn');
-    simulateBtn.addEventListener('click', (event) => {
+    const validateForm = () => {
         // form validation
         const range = [0, 1];
 
@@ -125,6 +124,19 @@ function init() {
 
         // if some validations failed
         if (validations.some(result => result === false)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // validate form on the fly
+    document.querySelector('.params form').addEventListener('change', validateForm)
+
+    const simulateBtn = document.getElementById('simulate-btn');
+    simulateBtn.addEventListener('click', (event) => {
+        // validate form, bail out if failed
+        if (!validateForm) {
             return;
         }
 
