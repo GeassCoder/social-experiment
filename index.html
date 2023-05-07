@@ -23,6 +23,7 @@
             <ul>
                 <li>When <strong>Use Loss Cap</strong> is checked, a person's asset loss will be capped by the input value. This corresponds to the fact that there are various types of insurances in the real world.</li>
                 <li>Loss must be no less than <strong>Loss Floor</strong>, which is default to 1.</li>
+                <li>When a person's asset cannot cover the loss, he will become <strong>bankrupt</strong>, his asset will be set to 0 permanently.</li>
             </ul>
             <li>When <strong>Use Heuristic Grouping</strong> is checked, the IQ and Assets data will only be grouped in 3 categories, this usually provides the insights of the problem more clearly.</li>
         </ul>
@@ -139,7 +140,7 @@
         </section>
 
         <!-- raw asset data -->
-        <section>
+        <section class="section">
             <h2>Raw Asset Data</h2>
             <div class="raw-data-container">
                 <canvas id="sorted-asset"></canvas>
@@ -147,6 +148,12 @@
             <div class="raw-data-container">
                 <canvas id="asset-vs-sorted-iq"></canvas>
             </div>
+        </section>
+
+        <!-- other asset stats -->
+        <section class="section">
+            <h2>Other Asset Stats</h2>
+            <div id="other-asset-stats-container"></div>
         </section>
     </main>
 

@@ -7,6 +7,7 @@ import drawAssetByIqGroupChart from './drawAssetByIqGroupChart.js';
 import drawAssetByAssetGroupChart from './drawAssetByAssetGroupChart.js';
 import drawTopIqProfilesTable from './drawTopIqProfilesTable.js';
 import drawTopAssetProfilesTable from './drawTopAssetProfilesTable.js';
+import showOtherAssetStats from './showOtherAssetStats.js';
 
 import { getIqGroups, getAssetGroups, sortBy } from '../util.js';
 
@@ -43,6 +44,9 @@ function createReports(profileList, useHeuristicGrouping) {
     // raw asset data
     drawSortedAssetChart(sortedProfilesByAsset);
     drawAssetVsSortedIqChart(sortedProfilesByIq);
+
+    // other asset stats
+    showOtherAssetStats(sortedProfilesByAsset);
 }
 
 export default createReports;

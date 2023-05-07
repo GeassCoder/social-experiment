@@ -95,6 +95,11 @@ main {
     border-bottom: 1px dashed grey;
 }
 
+.section:last-child {
+    border-bottom: none;
+    margin-bottom: 20px;
+}
+
 .flex {
     display: flex;
     justify-content: space-between;
@@ -175,6 +180,24 @@ td[data-id] i:hover {
     padding: 0 10px;
 }
 /* raw data styles end */
+
+/* other asset stats styles start */
+#other-asset-stats-container {
+    font-family: sans-serif;
+
+}
+
+#other-asset-stats-container span {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#other-asset-stats-container code {
+    font-size: 16px;
+    color: rgb(30, 149, 223);
+}
+
+/* other asset stats styles end */
 
 /* modal styles start */
 .modal {
