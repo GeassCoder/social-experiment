@@ -35,6 +35,11 @@
 .params h2 {
     display: flex;
     cursor: pointer;
+    padding: 5px 10px;
+}
+
+.params h2:hover {
+    background-color: rgb(238, 246, 255);
 }
 
 .params h2::after {

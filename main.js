@@ -13,6 +13,9 @@ let lossFactor = 0.5;
 let lossCap = 50;
 let useLossCap = true;
 
+// grouping option
+let useHeuristicGrouping = true;
+
 function init() {
     const paramsSection = document.querySelector('.params');
     const paramsHeader = document.getElementById('params-header');
@@ -27,6 +30,7 @@ function init() {
     const lossFactorInput = document.getElementById('loss-factor-input');
     const lossCapInput = document.getElementById('loss-cap-input');
     const useLossCapCheckbox = document.getElementById('use-loss-cap-checkbox');
+    const useHeuristicGroupingCheckbox = document.getElementById('use-heuristic-grouping-checkbox');
 
     // set initial values to controls
     pGreenInput.value = pGreen;
@@ -36,6 +40,7 @@ function init() {
     lossCapInput.value = lossCap;
     useLossCapCheckbox.checked = useLossCap;
     lossCapInput.disabled = !useLossCap;
+    useHeuristicGroupingCheckbox.checked = useHeuristicGrouping;
 
     // listen to value changes from controls
     pGreenInput.addEventListener('change', (event) => {
@@ -74,6 +79,11 @@ function init() {
         lossCapInput.disabled = !useLossCap;
     });
 
+    useHeuristicGroupingCheckbox.addEventListener('change', (event) => {
+        // update flag
+        useHeuristicGrouping = event.target.checked;
+    });
+
     const simulateBtn = document.getElementById('simulate-btn');
     simulateBtn.addEventListener('click', (event) => {
         // form validation
@@ -104,7 +114,8 @@ function init() {
             pRed,
             lossFactor,
             lossCap,
-            useLossCap
+            useLossCap,
+            useHeuristicGrouping
         });
 
         // show results

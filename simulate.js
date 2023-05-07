@@ -112,5 +112,5 @@ export default function runSimulate (userInputs) {
 
     const profileList = getProfileList(NUM_PEOPLE);
     simulate(userInputs, profileList);
-    createReports(profileList);
+    createReports(profileList, userInputs.useHeuristicGrouping);
 }

@@ -9,12 +9,13 @@ import drawTopAssetProfilesTable from './drawTopAssetProfilesTable.js';
 
 import { getIqGroups, getAssetGroups, sortBy } from '../util.js';
 
-function createReports(profileList) {
+
+function createReports(profileList, useHeuristicGrouping) {
     const iqs = profileList.map(one => one.iq);
-    const iqGroups = getIqGroups(iqs);
+    const iqGroups = getIqGroups(iqs, useHeuristicGrouping);
 
     const assets = profileList.map(one => one.asset);
-    const assetGroups = getAssetGroups(assets);
+    const assetGroups = getAssetGroups(assets, useHeuristicGrouping);
 
     const sortedProfilesByIq = sortBy(profileList, 'iq');
     const sortedProfilesByAsset = sortBy(profileList, 'asset');

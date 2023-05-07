@@ -38,7 +38,38 @@ function generateGroups(lower, upper, groupSize) {
     return result;
 }
 
-export function getIqGroups(iqs) {
+export function getIqGroups(iqs, useHeuristicGrouping) {
+    const maxIq = Math.max(...iqs);
+    const minIq = Math.min(...iqs);
+    console.log('max & min IQs', maxIq, minIq);
+
+    // only 3 heuristic groups
+    if (useHeuristicGrouping) {
+        const groups = [
+            // low iq
+            {
+                count: 0,
+                range: [0, 85],
+                label: 'low: < 85'
+            },
+            // medium iq
+            {
+                count: 0,
+                range: [85, 115],
+                label: 'medium: 85 - 115'
+            },
+            // hight iq
+            {
+                count: 0,
+                range: [115, Infinity],
+                label: 'high: >= 115'
+            }
+        ];
+
+        updateGroupCount(iqs, groups);
+        return groups;
+    }
+
     const lowerBound = 65;
     const upperBound = 145;
     const groupSize = 10;
@@ -58,8 +89,13 @@ export function getIqGroups(iqs) {
     const intermediateGroups = generateGroups(lowerBound, upperBound, groupSize);
     const groups = [firstGroup, ...intermediateGroups, lastGroup];
 
-    // update group count
-    iqs.forEach(one => {
+    updateGroupCount(iqs, groups);
+    return groups;
+}
+
+// update group count
+function updateGroupCount(data, groups) {
+    data.forEach(one => {
         const group = groups.find(oneGroup => isInRange(one, oneGroup.range));
 
         if (!group) {
@@ -69,13 +105,52 @@ export function getIqGroups(iqs) {
 
         ++group.count;
     });
-
-    return groups;
 }
 
-export function getAssetGroups(assets) {
-    const groupSize = 25;
+export function getAssetGroups(assets, useHeuristicGrouping) {
     const maxAsset = Math.max(...assets);
+    const minAsset = Math.min(...assets);
+    console.log('max & min assets', maxAsset, minAsset);
+
+    // only 3 heuristic groups
+    if (useHeuristicGrouping) {
+        const sortedAssets = assets.sort();
+        
+        const lowThreahold = sortedAssets[200];
+        const highThreshold = sortedAssets[800];
+
+        const groups = [
+            // low iq
+            {
+                count: 0,
+                range: [minAsset, lowThreahold],
+                label: 'bottom 20%'
+            },
+            // medium iq
+            {
+                count: 0,
+                range: [lowThreahold, highThreshold],
+                label: 'medium'
+            },
+            // hight iq
+            {
+                count: 0,
+                range: [highThreshold, Infinity],
+                label: 'top 20%'
+            }
+        ];
+
+        updateGroupCount(assets, groups);
+        return groups;
+    }
+
+    let groupSize = 50;
+
+    // if the range is too big, limit to 8 groups
+    if (maxAsset > 400) {
+        groupSize = Math.ceil(maxAsset / 8);
+    }
+
     const groups = generateGroups(0, maxAsset, groupSize);
 
     // handle an edge case
@@ -88,18 +163,7 @@ export function getAssetGroups(assets) {
         });
     }
 
-    // update group count
-    assets.forEach(one => {
-        const group = groups.find(oneGroup => isInRange(one, oneGroup.range));
-
-        if (!group) {
-            console.error('Should not happen!', one);
-            return;
-        }
-
-        ++group.count;
-    });
-
+    updateGroupCount(assets, groups);
     return groups;
 }
 
