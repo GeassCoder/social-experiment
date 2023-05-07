@@ -184,7 +184,7 @@ export function getYType(yValues) {
     const maxY = Math.max(...yValues);
     const minY = Math.min(...yValues);
 
-    return (maxY - minY > 10000) ? 'logarithmic' : 'linear';
+    return (maxY - minY > 100000) ? 'logarithmic' : 'linear';
 }
 
 export function drawTable (id, columns, rows, title) {
