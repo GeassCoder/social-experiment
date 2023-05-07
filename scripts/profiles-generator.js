@@ -4,7 +4,7 @@ const initAsset = 100;
 
 // < 70 => 0.1
 // > 140 => 0.9
-function getSuccessRate(iq) {
+export function getSuccessRate(iq) {
     if (iq < 70) {
         return 0.1;
     };

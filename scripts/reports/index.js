@@ -1,4 +1,5 @@
 import drawIqDistributionChart from './drawIqDistributionChart.js';
+import drawSuccessRateByIqChart from './drawSuccessRateByIqChart.js';
 import drawAssetDistributionChart from './drawAssetDistributionChart.js';
 import drawSortedAssetChart from './drawSortedAssetChart.js';
 import drawAssetVsSortedIqChart from './drawAssetVsSortedIqChart.js';
@@ -22,6 +23,7 @@ function createReports(profileList, useHeuristicGrouping) {
 
     // basic distribution
     drawIqDistributionChart(iqGroups);
+    drawSuccessRateByIqChart();
     drawAssetDistributionChart(assetGroups);
 
     // break down by ip group

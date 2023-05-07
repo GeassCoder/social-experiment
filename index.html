@@ -55,6 +55,11 @@
                 <span>Loss Cap (optional): </span>
                 <input id="loss-cap-input" type="number" min="0" />
             </label>
+
+            <label>
+                <span>Use Heuristic Grouping </span>
+                <input id="use-heuristic-grouping-checkbox" type="checkbox" required>
+            </label>
         </form>
 
         <button id="simulate-btn">Simulate</button>
@@ -64,10 +69,13 @@
         <section class="section">
             <h2>Basic Distributions</h2>
             <section class="flex">
-                <div class="column-2">
+                <div class="column-3">
                     <canvas id="iq-distribution"></canvas>
                 </div>
-                <div class="column-2">
+                <div class="column-3">
+                    <canvas id="success-rate-by-iq"></canvas>
+                </div>
+                <div class="column-3">
                     <canvas id="asset-distribution"></canvas>
                 </div>
             </section>
