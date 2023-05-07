@@ -9,7 +9,7 @@ let gainFactor = 0.03;
 
 // red dots
 let pRed = 0.05;
-let lossFactor = 0.5;
+let lossFactor = 0.3;
 let lossFloor = 5;
 let lossCap = 50;
 let useLossCap = true;
