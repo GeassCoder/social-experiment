@@ -1,8 +1,10 @@
-import { keep2DecimalDigits } from '../util.js';
+import { getYType, keep2DecimalDigits, useScientificForBigNumber } from '../util.js';
 
 export default function drawSortedAssetChart (sortedProfilesByAsset) {
     const xValues = sortedProfilesByAsset.map(one => one.id);
     const yValues = sortedProfilesByAsset.map(one => one.asset);
+
+    const yType = getYType(yValues);
 
     new Chart(
         document.getElementById('sorted-asset'),
@@ -18,10 +20,10 @@ export default function drawSortedAssetChart (sortedProfilesByAsset) {
                     },
                     tooltip: {
                         callbacks: {
-                            label: (context, aa) => {
+                            label: (context) => {
                                 const currentIndex = context.dataIndex;
                                 const currentDataPoint = sortedProfilesByAsset[currentIndex];
-                                return `Asset: ${keep2DecimalDigits(currentDataPoint.asset)},  ` + `IQ: ${currentDataPoint.iq}`;
+                                return `Asset: ${useScientificForBigNumber(currentDataPoint.asset)},  ` + `IQ: ${currentDataPoint.iq}`;
                             }
                         }
                     }
@@ -29,6 +31,18 @@ export default function drawSortedAssetChart (sortedProfilesByAsset) {
                 scales:{
                     x: {
                         display: false
+                    },
+                    y: {
+                        type: yType,
+                        ticks: {
+                            callback: (value) => {
+                                if (yType === 'logarithmic') {
+                                    return useScientificForBigNumber(value);
+                                }
+
+                                return keep2DecimalDigits(value);
+                            }
+                        }
                     }
                 }
             },

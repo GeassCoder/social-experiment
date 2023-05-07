@@ -1,12 +1,15 @@
 import getProfileList from './scripts/profiles-generator.js';
 import createReports from './scripts/reports/index.js';
-import { keep2DecimalDigits, cleanup } from './scripts/util.js';
+import { cleanup } from './scripts/util.js';
 
 // how many iterations to run lifetime
 const LIFETIME_TICKS = 40 * 2;
 
 // how many people in total
 const NUM_PEOPLE = 1000;
+
+// TODO:
+const lossFloor = 1;
 
 // return true with probability of p
 // simulate a random event with probability p
@@ -35,6 +38,11 @@ function tickOne (userInputs, profile, tickId) {
             loss = lossCap;
         }
 
+        // loss must be 1 at least
+        if (loss < lossFloor) {
+            loss = lossFloor;
+        }
+
         // if asset is not enough to cover loss, just lose everything, no negative
         if (loss > profile.asset) {
             loss = profile.asset;
@@ -47,8 +55,8 @@ function tickOne (userInputs, profile, tickId) {
         profile.history.push({
             tickId,
             event: 'red',
-            assetSnapshot: keep2DecimalDigits(profile.asset),
-            assetDiff: -keep2DecimalDigits(loss)
+            assetSnapshot: profile.asset,
+            assetDiff: -loss
         });
 
         // if already hit red, assume he cannot hit green
@@ -71,8 +79,8 @@ function tickOne (userInputs, profile, tickId) {
             tickId,
             event: 'green',
             isSuccess,
-            assetSnapshot: keep2DecimalDigits(profile.asset),
-            assetDiff: keep2DecimalDigits(gain)
+            assetSnapshot: profile.asset,
+            assetDiff: gain
         });
 
         return;
@@ -83,7 +91,7 @@ function tickOne (userInputs, profile, tickId) {
     profile.history.push({
         tickId,
         event: null,
-        assetSnapshot: keep2DecimalDigits(profile.asset),
+        assetSnapshot: profile.asset,
         assetDiff: 0
     });
 }

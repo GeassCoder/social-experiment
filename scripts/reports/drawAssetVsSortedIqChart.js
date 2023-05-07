@@ -1,8 +1,10 @@
-import { keep2DecimalDigits } from '../util.js';
+import { getYType, keep2DecimalDigits, useScientificForBigNumber } from '../util.js';
 
 export default function drawAssetVsSortedIqChart (sortedProfilesByIq) {
     const xValues = sortedProfilesByIq.map(one => one.id);
     const yValues = sortedProfilesByIq.map(one => one.asset);
+
+    const yType = getYType(yValues);
 
     new Chart(
         document.getElementById('asset-vs-sorted-iq'),
@@ -22,7 +24,7 @@ export default function drawAssetVsSortedIqChart (sortedProfilesByIq) {
                                 const currentIndex = context.dataIndex;
                                 const currentDataPoint = sortedProfilesByIq[currentIndex];
 
-                                return `Asset: ${keep2DecimalDigits(currentDataPoint.asset)},  ` + `IQ: ${currentDataPoint.iq}`;
+                                return `Asset: ${useScientificForBigNumber(currentDataPoint.asset)},  ` + `IQ: ${currentDataPoint.iq}`;
                             }
                         }
                     }
@@ -30,6 +32,18 @@ export default function drawAssetVsSortedIqChart (sortedProfilesByIq) {
                 scales:{
                     x: {
                         display: false
+                    },
+                    y: {
+                        type: yType,
+                        ticks: {
+                            callback: (value) => {
+                                if (yType === 'logarithmic') {
+                                    return useScientificForBigNumber(value);
+                                }
+
+                                return keep2DecimalDigits(value);
+                            }
+                        }
                     }
                 }
             },

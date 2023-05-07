@@ -1,4 +1,4 @@
-import { isInRange, keep2DecimalDigits } from '../util.js';
+import { getYType, isInRange, keep2DecimalDigits, useScientificForBigNumber } from '../util.js';
 
 function addAssetInfo (assetGroups, profileList) {
     // add group total asset
@@ -64,8 +64,10 @@ function addAssetInfo (assetGroups, profileList) {
 
 function drawTotal (assetGroups) {
     const xValues = assetGroups.map(one => one.label);
-    const yValues = assetGroups.map(one => keep2DecimalDigits(one.totalAsset));
+    const yValues = assetGroups.map(one => one.totalAsset);
 
+    const yType = getYType(yValues);
+    
     new Chart(
         document.getElementById('total-asset-by-asset-group'),
         {
@@ -77,6 +79,28 @@ function drawTotal (assetGroups) {
                     title: {
                         display: true,
                         text: 'Total Asset By Asset Group'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const totalAsset = context.raw;
+                                return `Total Asset: ${useScientificForBigNumber(totalAsset)}`;
+                            }
+                        }
+                    }
+                },
+                scales:{
+                    y: {
+                        type: yType,
+                        ticks: {
+                            callback: (value) => {
+                                if (yType === 'logarithmic') {
+                                    return useScientificForBigNumber(value);
+                                }
+
+                                return keep2DecimalDigits(value);
+                            }
+                        }
                     }
                 }
             },
@@ -85,7 +109,6 @@ function drawTotal (assetGroups) {
                 datasets: [
                     {
                         type: 'bar',
-                        label: 'Total Asset',
                         data: yValues
                     }
                 ]
@@ -97,7 +120,9 @@ function drawTotal (assetGroups) {
 
 function drawAverageAsset (assetGroups) {
     const xValues = assetGroups.map(one => one.label);
-    const yValues = assetGroups.map(one => keep2DecimalDigits(one.averageAsset));
+    const yValues = assetGroups.map(one => one.averageAsset);
+
+    const yType = getYType(yValues);
 
     new Chart(
         document.getElementById('average-asset-by-asset-group'),
@@ -110,6 +135,28 @@ function drawAverageAsset (assetGroups) {
                     title: {
                         display: true,
                         text: 'Average Asset By Asset Group'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const averageAsset = context.raw;
+                                return `Average Asset: ${useScientificForBigNumber(averageAsset)}`;
+                            }
+                        }
+                    }
+                },
+                scales:{
+                    y: {
+                        type: yType,
+                        ticks: {
+                            callback: (value) => {
+                                if (yType === 'logarithmic') {
+                                    return useScientificForBigNumber(value);
+                                }
+
+                                return keep2DecimalDigits(value);
+                            }
+                        }
                     }
                 }
             },
@@ -118,7 +165,6 @@ function drawAverageAsset (assetGroups) {
                 datasets: [
                     {
                         type: 'bar',
-                        label: 'Average Asset',
                         data: yValues
                     }
                 ]

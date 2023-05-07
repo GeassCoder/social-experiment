@@ -176,6 +176,17 @@ export function sortBy (list ,key) {
     });
 }
 
+export function useScientificForBigNumber (value) {
+    return (value >= 10000) ? value.toExponential(2) : keep2DecimalDigits(value);
+}
+
+export function getYType(yValues) {
+    const maxY = Math.max(...yValues);
+    const minY = Math.min(...yValues);
+
+    return (maxY - minY > 10000) ? 'logarithmic' : 'linear';
+}
+
 export function drawTable (id, columns, rows, title) {
     const tableEl = document.getElementById(id);
 
@@ -196,7 +207,7 @@ export function drawTable (id, columns, rows, title) {
                 let value = row[column];
 
                 if (typeof value === 'number') {
-                    value = keep2DecimalDigits(value);
+                    value = useScientificForBigNumber(value);
                 }
 
                 // if value is an object, just show play icon
@@ -273,7 +284,9 @@ const CHART_COLORS = {
 function drawHistoryChart (modalEl, profile, profileIdToPlay) {
     const history = profile.history;
     const xValues = history.map(one => one.tickId);
-    const yValues = history.map(one => keep2DecimalDigits(one.assetSnapshot));
+    const yValues = history.map(one => one.assetSnapshot);
+
+    const yType = getYType(yValues);
 
     const animation = getProgressiveEffect(yValues.length);
 
@@ -306,7 +319,7 @@ function drawHistoryChart (modalEl, profile, profileIdToPlay) {
                                 const currentIndex = context.dataIndex;
                                 const currentDataPoint = history[currentIndex];
 
-                                return `Asset: ${keep2DecimalDigits(currentDataPoint.assetSnapshot)},  ` + `Change: ${currentDataPoint.assetDiff}`;
+                                return `Asset: ${useScientificForBigNumber(currentDataPoint.assetSnapshot)},  ` + `Change: ${keep2DecimalDigits(currentDataPoint.assetDiff)}`;
                             },
                             labelColor: (context) => {
                                 const currentIndex = context.dataIndex;
@@ -323,6 +336,20 @@ function drawHistoryChart (modalEl, profile, profileIdToPlay) {
                                     backgroundColor
                                 };
                             },
+                        }
+                    }
+                },
+                scales:{
+                    y: {
+                        type: yType,
+                        ticks: {
+                            callback: (value) => {
+                                if (yType === 'logarithmic') {
+                                    return useScientificForBigNumber(value);
+                                }
+
+                                return keep2DecimalDigits(value);
+                            }
                         }
                     }
                 }
