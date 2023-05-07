@@ -15,7 +15,6 @@
     border: 1px solid rgb(229, 229, 229);
     width: 90%;
     margin: 0 auto;
-    padding: 0 20px 20px;
 
     background-color: white;
     opacity: 0.95;
@@ -25,6 +24,7 @@
 .params form,
 .params button {
     display: none;
+    margin: 10px 20px;
 }
 
 .params.expanded form,
@@ -35,11 +35,16 @@
 .params h2 {
     display: flex;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 10px 20px;
+    margin: 0;
+}
+
+.params h2 {
+    background-color: rgb(238, 246, 255);
 }
 
 .params h2:hover {
-    background-color: rgb(238, 246, 255);
+    background-color: rgb(218, 232, 247);
 }
 
 .params h2::after {
@@ -74,8 +79,9 @@ form input.invalid {
 }
 
 #simulate-btn {
-    margin: 10px;
     padding: 4px 10px;
+    margin-left: 30px;
+    margin-bottom: 20px;
 }
 
 main {
