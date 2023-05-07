@@ -14,6 +14,12 @@ let lossCap = 50;
 let useLossCap = true;
 
 function init() {
+    const paramsSection = document.querySelector('.params');
+    const paramsHeader = document.getElementById('params-header');
+    paramsHeader.addEventListener('click', () => {
+        paramsSection.classList.toggle('expanded');
+    }, false);
+
     // get controls
     const pGreenInput = document.getElementById('pGreen-input');
     const gainFactorInput = document.getElementById('gain-factor-input');

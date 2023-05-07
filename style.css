@@ -22,6 +22,32 @@
     box-shadow: 0 2px 2px rgb(229, 229, 229);
 }
 
+.params form,
+.params button {
+    display: none;
+}
+
+.params.expanded form,
+.params.expanded button {
+    display: block;
+}
+
+.params h2 {
+    display: flex;
+    cursor: pointer;
+}
+
+.params h2::after {
+    content: '+';
+    display: block;
+    margin-left: auto;
+    font-size: 20px;
+}
+
+.params.expanded h2::after {
+    content: '—';
+}
+
 form label {
     display: inline-block;
     padding: 5px 10px;
