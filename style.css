@@ -78,6 +78,41 @@ form input.invalid {
     border: 2px solid #ee2a2a;
 }
 
+form #heuristic-interpretations {
+    display: block;
+    margin: 5px 10px 0;
+    padding: 5px 10px;
+    background-color: #f7f2f2;
+}
+
+form #heuristic-interpretations span {
+    display: block;
+    margin-bottom: 8px;
+    font-family: sans-serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #666;
+
+    display: flex;
+    align-items: center;
+}
+
+form #heuristic-interpretations span:last-child {
+    margin-bottom: 0;
+}
+
+form #heuristic-interpretations span img {
+    margin-right: 5px;
+    border-radius: 100%;
+    background-color: white;
+}
+
+form #heuristic-interpretations code {
+    color: blue;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
 #simulate-btn {
     padding: 4px 10px;
     margin-left: 30px;

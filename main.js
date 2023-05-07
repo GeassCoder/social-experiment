@@ -45,10 +45,21 @@ function init() {
     lossCapInput.disabled = !useLossCap;
     useHeuristicGroupingCheckbox.checked = useHeuristicGrouping;
 
+    // get heuristic interpretation containers
+    const greenOccurrences = document.getElementById('average-green-event-occurrences');
+    const redOccurrences = document.getElementById('average-red-event-occurrences');
+
+    // set heuristic interpretations
+    greenOccurrences.textContent = keep2DecimalDigits(pGreen * 80);
+    redOccurrences.textContent = keep2DecimalDigits(pRed * 80);
+
     // listen to value changes from controls
     pGreenInput.addEventListener('change', (event) => {
         pGreen = keep2DecimalDigits(event.target.value);
         event.target.value = pGreen;
+
+        // update green event heuristic interpretation
+        greenOccurrences.textContent = keep2DecimalDigits(pGreen * 80);
     });
 
     gainFactorInput.addEventListener('change', (event) => {
@@ -59,6 +70,9 @@ function init() {
     pRedInput.addEventListener('change', (event) => {
         pRed = keep2DecimalDigits(event.target.value);
         event.target.value = pRed;
+
+        // update red event heuristic interpretation
+        redOccurrences.textContent = keep2DecimalDigits(pRed * 80);
     });
 
     lossFactorInput.addEventListener('change', (event) => {

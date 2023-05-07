@@ -32,6 +32,7 @@
         <!-- Params -->
         <h2 id="params-header">Parameters</h2>
         <form>
+            <!-- 1st row of controls -->
             <label>
                 <span>Probability of Green (0 - 1): </span>
                 <input id="pGreen-input" type="number" step="0.01" max='1' min="0" required />
@@ -53,6 +54,21 @@
                 <input id="loss-floor-input" type="number" step="1" max='20' min="1" required />
             </label>
             <br/>
+
+            <!-- heuristic interpretations -->
+            <span id="heuristic-interpretations">
+                <span>
+                    <img src="./assets/circled-info-icon.svg" width="20" height="20">
+                    Green event happens about <code id="average-green-event-occurrences"></code> times in average during lifetime (40 years, 80 simulation ticks)
+                </span>
+                <span>
+                    <img src="./assets/circled-info-icon.svg" width="20" height="20">
+                    Red event happens about <code id="average-red-event-occurrences"></code> times in average during lifetime (40 years, 80 simulation ticks)
+                </span>
+            </span>
+            <br/>
+
+            <!-- 2nd row of controls -->
             <label>
                 <span>Use Loss Cap </span>
                 <input id="use-loss-cap-checkbox" type="checkbox" required>
