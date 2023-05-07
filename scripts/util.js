@@ -177,7 +177,7 @@ export function sortBy (list ,key) {
 }
 
 export function useScientificForBigNumber (value) {
-    return (value >= 10000) ? value.toExponential(2) : keep2DecimalDigits(value);
+    return (value >= 100000) ? value.toExponential(2) : keep2DecimalDigits(value);
 }
 
 export function getYType(yValues) {

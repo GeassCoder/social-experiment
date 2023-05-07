@@ -8,6 +8,7 @@ import drawAssetByAssetGroupChart from './drawAssetByAssetGroupChart.js';
 import drawTopIqProfilesTable from './drawTopIqProfilesTable.js';
 import drawTopAssetProfilesTable from './drawTopAssetProfilesTable.js';
 import showOtherAssetStats from './showOtherAssetStats.js';
+import drawGiniIndexChart from './drawGiniIndexChart.js';
 
 import { getIqGroups, getAssetGroups, sortBy } from '../util.js';
 
@@ -47,6 +48,7 @@ function createReports(profileList, useHeuristicGrouping) {
 
     // other asset stats
     showOtherAssetStats(sortedProfilesByAsset);
+    drawGiniIndexChart(sortedProfilesByAsset);
 }
 
 export default createReports;
