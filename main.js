@@ -136,7 +136,7 @@ function init() {
     const simulateBtn = document.getElementById('simulate-btn');
     simulateBtn.addEventListener('click', (event) => {
         // validate form, bail out if failed
-        if (!validateForm) {
+        if (!validateForm()) {
             return;
         }
 
