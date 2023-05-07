@@ -50,19 +50,19 @@ export function getIqGroups(iqs, useHeuristicGrouping) {
             {
                 count: 0,
                 range: [0, 85],
-                label: 'low: < 85'
+                label: 'Low IQ (< 85)'
             },
             // medium iq
             {
                 count: 0,
                 range: [85, 115],
-                label: 'medium: 85 - 115'
+                label: 'Medium IQ (85-115)'
             },
             // hight iq
             {
                 count: 0,
                 range: [115, Infinity],
-                label: 'high: >= 115'
+                label: 'High IQ (>= 115)'
             }
         ];
 
@@ -119,24 +119,26 @@ export function getAssetGroups(assets, useHeuristicGrouping) {
         const lowThreahold = sortedAssets[200];
         const highThreshold = sortedAssets[800];
 
+        console.log('assets threshold', lowThreahold, highThreshold);
+
         const groups = [
             // low iq
             {
                 count: 0,
                 range: [minAsset, lowThreahold],
-                label: 'bottom 20%'
+                label: 'Poor (Bottom 20%)'
             },
             // medium iq
             {
                 count: 0,
                 range: [lowThreahold, highThreshold],
-                label: 'medium'
+                label: 'Medium'
             },
             // hight iq
             {
                 count: 0,
                 range: [highThreshold, Infinity],
-                label: 'top 20%'
+                label: 'Rich (Top 20%)'
             }
         ];
 
