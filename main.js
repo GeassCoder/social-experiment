@@ -9,7 +9,7 @@ let gainFactor = 0.03;
 
 // red dots
 let pRed = 0.05;
-let lossFactor = 0.3;
+let lossFactor = 0.5;
 let lossFloor = 5;
 let lossCap = 50;
 let useLossCap = true;
@@ -112,8 +112,8 @@ function init() {
             validateField(gainFactor, range, gainFactorInput),
             validateField(pRed, range, pRedInput),
             validateField(lossFactor, range, lossFactorInput),
-            // hack to include both ends of the range (1, 20)
-            validateField(lossFloor, [0.9, 20.1], lossFloorInput)
+            // hack to include both ends of the range (1, 50)
+            validateField(lossFloor, [0.9, 50.1], lossFloorInput)
         ];
 
         if (useLossCap) {
